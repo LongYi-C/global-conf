@@ -119,17 +119,29 @@ fi
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-update_prompt() {
-    PS1="\[\033[1;36m\]\h@\u\[\033[1;32m\][\w\[\033[1;36m\]$(parse_git_branch)\[\033[1;32m\]]\n\[\033[1;33m\]->\[\033[0m\]"
+function settitle(){
+  # 窗口名-win/wsl/lin@设备名：工作目录最后一个文件夹名
+  echo -ne "\033]0$(hostname):$(whoami):$(pwd)\007"
+  # 命令行名称
+  PS1="\[\033[1;36m\]\h@\u\[\033[1;32m\][\w\[\033[1;36m\]$(parse_git_branch)\[\033[1;32m\]]\n\[\033[1;33m\]->\[\033[0m\]"
 }
 get_os() {
-  if [[ -d "/mnt" ]]; then
-    echo "wsl" | sed -n 'p'
-  else
+  # 判断win-wsl-lin-mac
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [[ -d "/mnt" ]]; then
+      echo "wsl" | sed -n 'p'
+    else
+      echo "lin" | sed -n 'p'
+    fi
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "mac" | sed -n 'p'
+  elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
     echo "win" | sed -n 'p'
+  else
+    echo "unknown" | sed -n 'p'
   fi
 }
-get_global_config() {
+fig() {
   local hostname=$(hostname)
   if [[ $hostname == "y7000" ]]; then
     local os=$(get_os)
@@ -138,16 +150,30 @@ get_global_config() {
       echo "/mnt/d/longyi/all_resources/golbal-config" | sed -n 'p'
     else
       # 在Windows上
-      echo "/d/longyi/all_resources/golbal-config" | sed -n 'p'
+      echo "" | sed -n 'p'
     fi
   else
       echo "unknow device" | sed -n 'p'
   fi
 }
-export gconf=$(get_global_config)
-echo -ne "\033]0;$(pwd)\007"
+path(){
+#根据不同系统得到路径
+#参数路径为win的路径,如果是wsl就在路径前加/mnt
+#还可能与设备有关，用户有关等等
+  local os=$(get_os)
+  local path="$1"
 
-PROMPT_COMMAND=update_prompt
+  if [[ "$os" == "wsl" ]]; then
+    path="/mnt$path"
+  fi
+
+  echo "$path" | sed -n 'p'
+}
+export conf=$(path "/d/longyi/all_resources/golbal-config")
+export longyi=$(path "/d/longyi")
+
+PROMPT_COMMAND=settitle
 alias vi='nvim'
 alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
-export golbal_config=
+
+# 还需要一个动态设置窗口的函数
