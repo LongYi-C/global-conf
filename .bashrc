@@ -145,6 +145,7 @@ get_global_config() {
   fi
 }
 export gconf=$(get_global_config)
+echo -ne "\033]0;$(pwd)\007"
 
 PROMPT_COMMAND=update_prompt
 alias vi='nvim'
