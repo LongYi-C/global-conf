@@ -1,0 +1,306 @@
+" "  ============================ 未模块化配置j ============================
+" " 一个d删除,两个d删除一行
+" " 一个;行尾分号,两个分号在原来的地方分号
+" " 不将删除的元素放入剪切板
+
+" " ============================ 基础配置 ============================
+" " 设置jj为退出
+inoremap jj <Esc>
+
+
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+"" =================================================================
+"" ========================== 编辑器=================================
+" 启用系统剪切板
+set clipboard=unnamed
+nnoremap d "_d
+vnoremap d "_d
+"" ========================== 普通字符输入规则 ========================
+""call SymbolCtE()          "" 将所有的中文符号转换为英文符号
+call NormalInsertSymbol() "" normal模式下插入标点符号和普通字符
+call UseIdeaShortcutKey() "" 使用idea原生快捷键
+
+"" 移动代码行
+nnoremap J :m+<CR>
+vnoremap J :m'>+<CR>gv
+nnoremap K :m-2<CR>
+vnoremap K :m-2<CR>gv
+
+"" 其他特殊快捷键
+"" 在v模式下space代表esc
+vnoremap <Space> <ESC>
+nnoremap <space> a<space>
+
+" " 输入<ENTER>时将光标移动到行尾
+nnoremap <CR> A
+
+" " 输入;时将光标移动到行尾，并在行尾添加
+inoremap ; <ESC>A;
+nnoremap ; A;
+inoremap <C-;> ;
+nnoremap <C-;> a;
+
+" " 退格键删除
+nnoremap <BS> a<BS><ESC>
+vnoremap <BS> x
+" " ============================ normal模式下的编辑器 ============================
+" " 输入符号直接转换为输入
+set encoding=utf-8
+vnoremap <Tab> >gv
+nnoremap <Tab> v>gv<ESC>
+"在normal模式保持英文输入法"
+nnoremap r a<BS>
+
+set keep-english-in-normal
+sethandler <S-Tab> a:ide
+sethandler <C-D> a:ide
+"win风格的复制粘贴撤销"
+sethandler <C-Z> a:ide
+sethandler <C-X> a:ide
+sethandler <C-c> a:ide
+sethandler <C-v> a:ide
+sethandler <BS> a:ide
+function! NormalInsertSymbol()
+"normal 模式下插入标点符号和普通字"
+    nnoremap : a:
+    nnoremap ? a?
+    nnoremap , a,
+    nnoremap . a.
+    nnoremap ' a'
+    nnoremap " a"
+    nnoremap ( a(
+    nnoremap ) a)
+    nnoremap [ a[
+    nnoremap ] a]
+    nnoremap " a"
+    nnoremap ' a'
+    nnoremap ` a`
+    nnoremap { a{
+    nnoremap } a}
+    nnoremap / a/
+    nnoremap \ a\
+    nnoremap ! a!
+    nnoremap @ a@
+    nnoremap $ a$
+    nnoremap % a%
+    nnoremap ^ a^
+    nnoremap & a&
+    nnoremap * a*
+    nnoremap _ a_
+    nnoremap = a=
+    nnoremap + a+
+    nnoremap - a-
+    nnoremap < a<
+    nnoremap > a>
+endfunction
+
+function! SymbolCtE()
+    inoremap ； ;
+    inoremap ： :
+    inoremap ？ ?
+    inoremap ， ,
+    inoremap 。 .
+    inoremap 《 <
+    inoremap 》 >
+    inoremap （ (
+    inoremap ） )
+    inoremap 【 [
+    inoremap 】 ]
+    inoremap “ "
+    inoremap ” "
+    inoremap ’ '
+    inoremap 、 \
+    inoremap ！ !
+    inoremap ￥ $
+endfunction
+" " ============================ 代码 ============================"
+" " 只有在注释或双引号之内才会输入英文,输入法才会切换到英文
+
+
+" call g:Test.landing()
+" " ========================= Test ============================ "
+" " let g:Test = {
+" "      "testList":[1,2,3,4,5],
+" "      "testDirct":{"m":"d","k","j"}
+" " }
+" function g:Test.landing() abort
+"     nnoremap <C-7> :call g:Test.test1()<CR>
+" endfunction
+" function! g:Test()
+"     echo g:Test.testList
+" endfunction
+" " ========================= 基础键位配置 ============================= "
+" let mapleader = "\`"
+" map <Leader>p <Action>(IdeaVim.ReloadVimRc.reload)
+" call g:keyMap.disableKeyMap()                   "清除多余的快捷键"
+" call g:EditWin.char.ChineseToEnglishForChar()   "中文符号转为英文符号"
+" call g:FileTree.landing()                       "加载文件树与文件操作"
+" call g:Window.landing()
+" " ======================== 命令相关配置 "
+" set timeoutlen=1000
+" set encoding=utf-8
+" set history=200
+" set visualbell                                      " 禁用错误提示音
+" set scrolloff=5                                   " 垂直滚动时，光标距离顶部的位置
+" set showmode                                      " 开启模式显示
+" set ideamarks                                       " 同步idea和vim书签;
+" " ========================= 输入法相关 ideaVimExtension ================= "
+
+" " ========================= 普通快捷键 "
+" " 在V模式下映射Tab键
+" vnoremap <Tab> <Esc>I<Tab>i<BS><Esc>
+" " ========================= insert model ============================== "
+" map <C-f> <Nop>
+" " 进入insert模式 "
+
+" " 结束insert模式 "
+" inoremap jj <ESC>
+" " 移动映射 "
+" inoremap <Leader>h <Home>
+" inoremap <Leader>l <end>
+" inoremap <C-j> <Down>
+" inoremap <C-k> <Up>
+" inoremap <C-h> <Left>
+" inoremap <C-l> <Right>
+" " 将中文标点映射为英文标点
+
+" " ========================= Tab操作 "
+" noremap <C-h> gT                                    "上一个Tab"
+" noremap <C-l> gt                                    "下一个Tab"
+"                                                     "pin tab"
+" nmap <C-p> <Action>(PinActiveEditorTab)
+" " ========================= 当前窗口操作 "
+
+" " ========================= 多窗口操作 "
+"                     "打开文件、目录和书签"
+" " ========================= 编码相关 ============================
+" " ALT+enter 上下文相关"
+" " ========================= 普通快捷键 "
+"                                                         "上移某行或块"
+" nnoremap <C-j> :m .+1<CR>
+" vnoremap <C-j> :m '>+1<CR>gv=gv
+"                                                         "下移某行或块"
+" nnoremap <C-k> :m .-2<CR>
+" vnoremap <C-k> :m '<-2<CR>gv=gv
+"                                                         "向下复制本行"
+" nnoremap <C-d> :t. +1<CR>
+" " ========================= 代码相关 "
+" " IDEA: ALT+CTRL+L ReformatCode"                         "格式化代码"
+" " ExpandRegion" "展开方法快"
+" " ExpandAllRegions""展开所有方法快"
+" " CollapseAllRegions""合起所有方法快"
+" " ========================= 项目相关 "
+" " ========================= 面向对象 "
+" " 重命名 "
+" nmap <C-7> <Action>(RenameElement)
+" " 选择模式扩大选择范围
+" vmap v <Action>(EditorSelectWord)
+" " 选择模式缩小选择范围
+" vmap V <Action>(EditorUnSelectWord)
+" " 高亮搜索
+" set hlsearch
+" " =========================Git相关 ============================
+" " Git 提交记录
+" nmap ta <Action>(Annotate)
+" " Git 当前文件历史
+" map th <Action>(Vcs.ShowTabbedFileHistory)
+
+
+" " ========================= keyMap =========================== "
+" let g:KeyMap = {}
+" function g:Keymap.landing() abort
+    
+" endfunction
+" function! g:KeyMap.disableKeyMap()
+"     "中英文字母,符号,特殊快捷键"
+" endfunction
+" let g:KeyMap.insert{
+"     /"endInsertList":{"<Tab>":"a<Tab>","<Enter>":"A","<Space>":"ea",";":"A;","@":"i@","\"":"a\"","{":"a{"}
+" /}
+
+" " ========================= keyboard ========================= "
+" let g:Keyboard={}
+
+" " ============================================================ "
+" " ========================= Idea ============================= "
+" " ============================================================ "
+" " ========================= Vim ============================== "
+
+" " ============================================================ "
+" " ========================= EditWin ========================== "
+" let g:EditWin={}
+" " ========================= char "
+" let g:EditWin.char = {
+"     /"LowerCase":['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+"     /"ChineseChar":["；","。","，","：","“","‘","！","？","……","￥","（","）","【","】","{","}","《","》"]
+"     /"SymbolMappingTableForChineseEnglish":{'；': ';', '。': '.', '，': ',', '：': ':', '“': '"', '‘': "'", '！': '!', '？': '?', '……': '^', '￥': '$', '（': '(', '）': ')', '【': '[', '】': ']', '{': '{', '}': '}', '《': '<', '》': '>'}
+" /}
+" "将中文标点映射为英文标点"
+" function! g:EditWin.char.ChineseToEnglishForChar()
+"     printf()
+"     for chineseChar in g:EditWin.char.ChineseChar
+"         let englishChar = get(g:EditWin.char.SymbolMappingTableForChineseEnglish,chineseChar)
+"         execute "inoremap " .chineseChar . " " . englishChar
+"     endfor
+" endfunction
+" " ========================= line "
+" let g:EditWin.line = {}
+" " ========================= buffer "
+" let g:EditWin.buffer = {}
+" " ========================= cursor "
+" let g:EditWin.cursor = {}
+" " 上下左右: hjkl    行首行尾:<Home><End>"
+" function
+"     nnoremap <C-j> <Down>
+"     nnoremap <C-k> <Up>
+"     nnoremap <C-h> <Left>
+"     nnoremap <C-l> <Right>
+" endfunction
+" " ========================= Tab "
+" let g:EditWin.tab = {}
+" " ========================= Window =========================== "
+" let g:Window={}
+" function! g:Window.landing()                                   
+"     nmap <C-1> <Action>(ToggleFullScreen)
+"     nmap <C-2> <Action>(HideAllWindows)
+"     nmap <C-3> <Action>(ChangeLaf)
+" endfunction
+
+" " ========================= FileTree ========================= "
+" let g:FileTree = {}
+" function! g:FileTree.landing()
+"     set NERDTree
+"     set hidden                            "文件自动保存"
+"     noremap <C-e> :NERDTree<CR>         
+"     noremap <C-w> :NERDTreeClose<CR>
+"     noremap <C-0> :wq!<CR>
+"     "IDEA: CTRL+9"                        "创建文件"
+"     "AHK : CTRL+8"                        "删除文件"
+" endfunction
+" " ========================= Git ============================== "
+" " ========================= Utils ============================ "
+" let g:Utils = {}
+" function g:Utils.range(start, end) abort
+"     let result = []
+"     let i = a:start
+"     while i < a:end
+"         let result = g:Utils.add(result, i)
+"         let i += 1
+"     endwhile
+"     return result
+" endfunction
+
+" function g:Utils.add(list, item) abort
+"     let list_str = join(a:list, ', ')
+"     let new_list_str = list_str . ', ' . a:item
+"     let new_list = split(new_list_str, ', ')
+"     return  new_list
+" endfunction
+
+" " ======================== log ============================== "
+" let g:Log = {}
+
