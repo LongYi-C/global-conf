@@ -1,4 +1,5 @@
 
+export PATH="$HOME/global-conf/automated:$PATH"
 export LANG=C.UTF-8
 # 引入本地bashrc
 
