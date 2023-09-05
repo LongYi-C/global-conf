@@ -1,7 +1,7 @@
 get_os() {
   # 判断win-wsl-lin-mac
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if [[ -d "/mnt" ]]; then
+    if [[ -d "/mnt/c" ]]; then
       echo "wsl" | sed -n 'p'
     else
       echo "lin" | sed -n 'p'

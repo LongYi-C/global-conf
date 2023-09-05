@@ -1,4 +1,20 @@
+
 export LANG=C.UTF-8
+# 引入本地bashrc
+
+
+# 检查文件是否存在
+if [ -f "$local_bashrc" ]; then
+    # 如果存在，引入文件
+    source "$local_bashrc"
+else
+    # 如果不存在，创建文件并引入
+    touch "$local_bashrc"
+    echo "# 这是我的本地bashrc文件" >> "$local_bashrc"
+    echo "# 在这里可以添加自定义的配置" >> "$local_bashrc"
+    source "$local_bashrc"
+fi
+
 
 case $- in
     *i*) ;;
