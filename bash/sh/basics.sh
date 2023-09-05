@@ -1,32 +1,19 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-# test longyi
+export LANG=C.UTF-8
 
-# If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
+HISTCONTROL=ignoreboth  # 不要在历史记录中存放重复的行和以空格开头的行
+shopt -s histappend     # append to the history file, don't overwrite it
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+shopt -s checkwinsize   # 根据窗口大小来安排命令的排列
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -116,80 +103,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-function settitle(){
-  # 窗口名-win/wsl/lin@设备名：工作目录最后一个文件夹名
-  echo -ne "\033]0$(hostname):$(whoami):$(pwd)\007"
-  # 命令行名称
-  PS1="\[\033[1;36m\]\h@\u\[\033[1;32m\][\w\[\033[1;36m\]$(parse_git_branch)\[\033[1;32m\]]\n\[\033[1;33m\]->\[\033[0m\]"
-}
-get_os() {
-  # 判断win-wsl-lin-mac
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if [[ -d "/mnt" ]]; then
-      echo "wsl" | sed -n 'p'
-    else
-      echo "lin" | sed -n 'p'
-    fi
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "mac" | sed -n 'p'
-  elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
-    echo "win" | sed -n 'p'
-  else
-    echo "unknown" | sed -n 'p'
-  fi
-}
-fig() {
-  local hostname=$(hostname)
-  if [[ $hostname == "y7000" ]]; then
-    local os=$(get_os)
-    if [[ $os == "wsl" ]]; then
-      # 在WSL上
-      echo "/mnt/d/longyi/all_resources/golbal-config" | sed -n 'p'
-    else
-      # 在Windows上
-      echo "" | sed -n 'p'
-    fi
-  else
-      echo "unknow device" | sed -n 'p'
-  fi
-}
-path(){
-#根据不同系统得到路径
-#参数路径为win的路径,如果是wsl就在路径前加/mnt
-#还可能与设备有关，用户有关等等
-  local os=$(get_os)
-      local path="$1"
-
-  if [[ "$os" == "wsl" ]]; then
-    path="/mnt$path"
-  fi
-
-  echo "$path" | sed -n 'p'
-}
-export conf=$(path "/d/longyi/all_resources/golbal-config")
-export longyi=$(path "/d/longyi")
-
-PROMPT_COMMAND=settitle
-alias vi='nvim'
-alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
-
-# 还需要一个动态设置窗口的函数
-#
-export LANG=C.UTF-8
-
-# 当操作系统是
-
-
-
-
-
-
-
-
-
-
-
 
