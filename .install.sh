@@ -40,7 +40,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     # 如果时linux 从rescouce中安装nvim
     # 目前适用于Ubuntu的apt安装，其他包管理器可能需要更改
-    rsync -rav --ignore-existing $SP/resource/nvim-linux64 /usr
+    sudo rsync -ra --ignore-existing $SP/resource/nvim-linux64/ /usr
 fi
 # 自动创建ssh公匙
 if [[ -f ~/.ssh/id_rsa.pub ]]; then
