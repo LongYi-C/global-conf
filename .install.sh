@@ -7,6 +7,8 @@
 # 在用户目录中: git clone git@gitee.com:eurybia/global-conf.git
 # cd global-conf
 # ./instal.sh
+#
+# 结束后要在nvim应用中执行：PackerSync命令安装插件
 SP=$(dirname "$(readlink -f "$0")")
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
