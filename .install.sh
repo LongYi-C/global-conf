@@ -14,11 +14,9 @@ MSYS=winsymlinks:nativestrict
     # 如果时win下载scoop，下载nvim
     # scoop install nvim
     rm -rf ~/AppData/Local/nvim/ && mkdir -p ~/AppData/Local/nvim/
-    rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/
+    rm -rf ~/.config/nvim/ && ln -s ~/AppData/Local/nvim ~/.config/nvim
 
-    ln -s $SP/nvim/lua/ ~/.config/nvim/lua
     ln -s $SP/nvim/lua/ ~/AppData/Local/nvim/lua
-    ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
     ln -s $SP/nvim/init.lua ~/AppData/Local/nvim/init.lua
     
     rm -f ~/.wslconfig && ln -s $SP/.wslconfig ~/.wslconfig
@@ -29,7 +27,7 @@ MSYS=winsymlinks:nativestrict
     rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
     rm -rf $SP/.git/hooks && cp -r $SP/git/hooks $SP/.git/hooks
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    echo "脚本的全路径是: $SP"
+    sudo chmod -R 755 $SP
     sudo rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/
     sudo ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
     sudo ln -s $SP/nvim/lua ~/.config/nvim/lua
@@ -41,7 +39,6 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # 如果时linux 从rescouce中安装nvim
     sudo rm -f /usr/local/bin/nvim
     sudo cp $SP/resource/nvim /usr/local/bin
-    sudo chmod -R 755 /usr/local/bin/nvim
 fi
 # 自动创建ssh公匙
 if [[ -f ~/.ssh/id_rsa.pub ]]; then
