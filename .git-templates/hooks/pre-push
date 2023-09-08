@@ -1,4 +1,0 @@
-git add .
-echo "自动添加完成"
-git commit -m
-echo "自动提交完成"

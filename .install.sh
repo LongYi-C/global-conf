@@ -1,0 +1,55 @@
+#!/bin/bash
+
+SP=$(dirname "$(readlink -f "$0")")
+
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+MSYS=winsymlinks:nativestrict
+    # 如果时win下载scoop，下载nvim
+    # scoop install nvim
+    rm -rf ~/AppData/Local/nvim/ && mkdir -p ~/AppData/Local/nvim/
+    rm -rf ~/.config/nvim/ && ln -s ~/AppData/Local/nvim ~/.config/nvim
+
+    ln -s $SP/nvim/lua/ ~/AppData/Local/nvim/lua
+    ln -s $SP/nvim/init.lua ~/AppData/Local/nvim/init.lua
+    
+    rm -f ~/.wslconfig && ln -s $SP/.wslconfig ~/.wslconfig
+    rm -f ~/.ideavimrc && ln -s $SP/.ideavimrc ~/.ideavimrc
+
+
+    rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
+    rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
+    rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "info: Linux安装中......"
+    sudo chmod -R 755 $SP
+    
+    sudo rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
+    echo "info: ~/.bashrc 链接成功"
+    sudo rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
+    echo "info: ~/.git-templates 链接成功"
+    sudo rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
+    echo "info: 全局配置仓库 hooks 链接成功"
+
+    echo "info: neovim 正在从 nvim/nvim-linux64.tar.gz 安装中......"
+    sudo tar -xzf $SP/nvim/nvim-linux64.tar.gz -C /tmp/
+    echo "info: 解压成功"
+    sudo cp -r /tmp/nvim-linux/* /usr/bin/local/
+    echo "info: 安装成功"
+    sudo rm -rf /tmp/nvim-linux
+    echo "info: 删除安装包"
+
+    echo "info: neovim 配置链接中......"
+    sudo rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/
+    sudo ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
+    sudo ln -s $SP/nvim/lua ~/.config/nvim/lua
+    echo "info: neovim 配置链接成功"
+fi
+# 自动创建ssh公匙
+if [[ -f ~/.ssh/id_rsa.pub ]]; then
+    echo "SSH public key already exists."
+else
+    ssh-keygen -t rsa
+fi
+echo "SSH public key:"
+cat ~/.ssh/id_rsa.pub
+source ~/.bashrc

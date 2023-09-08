@@ -1,0 +1,4 @@
+#!/bin/sh
+git add .
+echo "自动添加所有文件"
+
