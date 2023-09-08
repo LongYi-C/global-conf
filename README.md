@@ -1,5 +1,9 @@
 # prefile
 各种主机的配置非常繁琐，因此
+# install
+```
+git clone git@gitee.com:eurybia/global-conf.git 
+```
 # windows-before
     # 1 windows先在powershell中执行以下命令下载scoop，然后下载git
     #   iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
