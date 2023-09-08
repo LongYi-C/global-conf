@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# windows先在powershell中执行以下命令下载scoop，然后下载git
-# iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-# scoop install git
-
-# 在用户目录中: git clone git@gitee.com:eurybia/global-conf.git
-# cd global-conf
-# ./instal.sh
-#
-# 结束后要在nvim应用中执行：PackerSync命令安装插件
 SP=$(dirname "$(readlink -f "$0")")
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
@@ -27,20 +18,31 @@ MSYS=winsymlinks:nativestrict
 
     rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
     rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
-    rm -rf $SP/.git/hooks && cp -r $SP/git/hooks $SP/.git/hooks
+    rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "info: Linux安装中......"
     sudo chmod -R 755 $SP
+    
+    sudo rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
+    echo "info: ~/.bashrc 链接成功"
+    sudo rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
+    echo "info: ~/.git-templates 链接成功"
+    sudo rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
+    echo "info: 全局配置仓库 hooks 链接成功"
+
+    echo "info: neovim 正在从 nvim/nvim-linux64.tar.gz 安装中......"
+    sudo tar -xzf $SP/nvim/nvim-linux64.tar.gz -C /tmp/
+    echo "info: 解压成功"
+    sudo cp -r /tmp/nvim-linux/* /usr/bin/local/
+    echo "info: 安装成功"
+    sudo rm -rf /tmp/nvim-linux
+    echo "info: 删除安装包"
+
+    echo "info: neovim 配置链接中......"
     sudo rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/
     sudo ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
     sudo ln -s $SP/nvim/lua ~/.config/nvim/lua
-
-    sudo rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
-    sudo rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
-    sudo rm -rf $SP/.git/hooks && cp -r $SP/git/hooks $SP/.git/hooks
-
-    # 如果时linux 从rescouce中安装nvim
-    # 目前适用于Ubuntu的apt安装，其他包管理器可能需要更改
-    sudo rsync -ra --ignore-existing $SP/resource/nvim-linux64/ /usr
+    echo "info: neovim 配置链接成功"
 fi
 # 自动创建ssh公匙
 if [[ -f ~/.ssh/id_rsa.pub ]]; then
