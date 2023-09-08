@@ -33,8 +33,9 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: neovim bin 卸载完成"
     sudo rm -rf /usr/local/lib/nvim
     echo "info: neovim lib 卸载完成"
-    sudo rm -rf /usr/local/man/man1/nvim.1
+    sudo rm -rf /usr/local/share/man/man1/nvim.1
     echo "info: neovim man 卸载完成"
+    sudo rm -f /usr/local/share/applications/nvim.desktop
     sudo rm -rf /usr/local/share/nvim
     sudo rm -rf ~/.local/share/nvim
     echo "info: neovim share 卸载完成"

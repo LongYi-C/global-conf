@@ -31,11 +31,11 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: 全局配置仓库 hooks 链接成功"
 
     echo "info: neovim 正在从 nvim/nvim-linux64.tar.gz 安装中......"
-    sudo tar -xzf $SP/nvim/nvim-linux64.tar.gz -C /tmp/
+    sudo tar -xz -f $SP/nvim/nvim-linux64.tar.gz -C /tmp/
     echo "info: 解压成功"
-    sudo cp -r /tmp/nvim-linux/* /usr/bin/local/
+    sudo cp -rvf /tmp/nvim-linux64/* /usr/local/
     echo "info: 安装成功"
-    sudo rm -rf /tmp/nvim-linux
+    sudo rm -rf /tmp/nvim-linux64
     echo "info: 删除安装包"
 
     echo "info: neovim 配置链接中......"
