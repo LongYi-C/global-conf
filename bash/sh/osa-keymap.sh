@@ -6,3 +6,5 @@ alias py='python'
 alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
 alias git-push='git push origin HEAD'
 
+git config --global user.name "longyi"
+git config --global user.email "longyi.c@qq.com"
