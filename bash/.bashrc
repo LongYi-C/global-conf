@@ -5,7 +5,6 @@ source $conf/bash/sh/basics.sh
 source $conf/bash/sh/theme.sh         # 外表主题
 source $conf/bash/sh/osa-keymap.sh    # 系统适配与快捷键
 
-# lexport mysql_volume $undifine
-# lexport test $undifine
+lexport mysql_volume $undefined
 
 source $bashrc_local                  # 引入local_bash
