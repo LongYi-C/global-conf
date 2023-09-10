@@ -11,7 +11,8 @@ alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
 alias git-pull='git pull origin develop'
 function git-push(){  
     git add .  
-    read message -p "请输入commit注释："
+    read -p "请输入commit注释：" message
+    echo $message
     git commit -m "$message"  
     git push origin main:develop  
 }
