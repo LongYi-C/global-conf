@@ -3,8 +3,12 @@
 alias vi='nvim'
 alias py='python'
 
-alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
-alias git-push='git push origin HEAD'
-
 git config --global user.name "longyi"
 git config --global user.email "longyi.c@qq.com"
+
+alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
+alias git-push='git push origin main:develop'
+alias git-pull='git pull origin develop'
+
+lalias docker-start "$undifine"
+

@@ -1,8 +1,11 @@
 export conf="$HOME/global-conf"
-export local_bashrc="$HOME/.bashrc_local"
 
-source $conf/bash/sh/basics.sh   # 基础设置
-source $conf/bash/sh/theme.sh    # 外表主题
+source $conf/bash/sh/utils.sh
+source $conf/bash/sh/basics.sh
+source $conf/bash/sh/theme.sh         # 外表主题
 source $conf/bash/sh/osa-keymap.sh    # 系统适配与快捷键
 
+# lexport mysql_volume $undifine
+# lexport test $undifine
 
+source $bashrc_local                  # 引入local_bash
