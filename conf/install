@@ -1,5 +1,5 @@
 #!/bin/bash
-SP=$(dirname "$(dirname "$(readlink -f "$0")")")
+gconf=$(dirname "$(dirname "$(readlink -f "$0")")")
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
 MSYS=winsymlinks:nativestrict
@@ -7,26 +7,30 @@ MSYS=winsymlinks:nativestrict
     # scoop install nvim
     rm -rf ~/AppData/Local/nvim/ && mkdir -p ~/AppData/Local/nvim/
     rm -rf ~/.config/nvim/ && ln -s ~/AppData/Local/nvim ~/.config/nvim
+    ln -s $gconf/nvim/lua/ ~/AppData/Local/nvim/lua:
+    ln -s $gconf/nvim/init.lua ~/AppData/Local/nvim/init.lua
 
-    ln -s $SP/nvim/lua/ ~/AppData/Local/nvim/lua
-    ln -s $SP/nvim/init.lua ~/AppData/Local/nvim/init.lua
+    rm -f ~/.bashrc && ln -s $gconf/bash/.bashrc ~/.bashrc
+    rm -f ~/.wslconfig && ln -s $gconf/win/.wslconfig ~/.wslconfig
+    rm -f ~/.ideavimrc && ln -s $gconf/win/.ideavimrc ~/.ideavimrc
+    rm -rf ~/.git-templates && ln -s $gconf/git ~/.git-templates
     
-    rm -f ~/.wslconfig && ln -s $SP/.wslconfig ~/.wslconfig
-    rm -f ~/.ideavimrc && ln -s $SP/.ideavimrc ~/.ideavimrc
+    rm -f  /usr/bin/conf && ln -s $HOME/global-conf/conf/conf /usr/bin/conf
+    echo "info: conf 命令安装完成"
+    rm -f  /usr/bin/install && ln -s $HOME/global-conf/conf/install /usr/bin/install
+    echo "info: install 命令安装完成"
+    rm -f  /usr/bin/uninstall && ln -s $HOME/global-conf/conf/uninstall /usr/bin/uninstall
+    echo "info: uninstall 命令安装完成"
 
-
-    rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
-    rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
-    rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: Linux安装中......"
-    sudo chmod -R 755 $SP
+    sudo chmod -R 755 $gconf
     
-    sudo rm -f ~/.bashrc && ln -s $SP/bash/.bashrc ~/.bashrc
+    sudo rm -f ~/.bashrc && ln -s $gconf/bash/.bashrc ~/.bashrc
     echo "info: ~/.bashrc 链接成功"
-    sudo rm -rf ~/.git-templates && ln -s $SP/git ~/.git-templates
+    sudo rm -rf ~/.git-templates && ln -s $gconf/git ~/.git-templates
     echo "info: ~/.git-templates 链接成功"
-    sudo rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
+    sudo rm -rf $gconf/.git/hooks && ln -s $gconf/git/hooks $gconf/.git/hooks
     echo "info: 全局配置仓库 hooks 链接成功"
     sudo rm -f  /usr/local/bin/conf && sudo ln -s $HOME/global-conf/conf/conf /usr/local/bin/conf
     echo "info: conf 命令安装完成"
@@ -37,7 +41,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 
     echo "info: neovim 正在从 nvim/nvim-linux64.tar.gz 安装中......"
-    sudo tar -xz -f $SP/nvim/nvim-linux64.tar.gz -C /tmp/
+    sudo tar -xz -f $gconf/nvim/nvim-linux64.tar.gz -C /tmp/
     echo "info: 解压成功"
     sudo cp -rf /tmp/nvim-linux64/* /usr/local/
     echo "info: 安装成功"
@@ -46,8 +50,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     echo "info: neovim 配置链接中......"
     sudo rm -rf ~/.config/nvim/ && mkdir -p ~/.config/nvim/
-    sudo ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
-    sudo ln -s $SP/nvim/lua ~/.config/nvim/lua
+    sudo ln -s $gconf/nvim/init.lua ~/.config/nvim/init.lua
+    sudo ln -s $gconf/nvim/lua ~/.config/nvim/lua
     echo "info: neovim 配置链接成功"
 
 fi
