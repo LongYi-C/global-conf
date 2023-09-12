@@ -25,6 +25,13 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: Linux 卸载中......"
     sudo rm -rf ~/.git-templates 
     echo "info: Linux 卸载中......"
+    sudo rm -f /usr/local/bin/conf
+    echo "info: conf命令卸载中......"
+    sudo rm -f /usr/local/bin/install
+    echo "info: install命令卸载中......"
+    sudo rm -f /usr/local/bin/uninstall
+    echo "info: uninstall命令卸载中......"
+
 
     echo "info: neovim 卸载中......"
     sudo rm -rf ~/.config/nvim

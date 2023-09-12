@@ -1,6 +1,5 @@
 #!/bin/bash
-
-SP=$(dirname "$(readlink -f "$0")")
+SP=$(dirname "$(dirname "$(readlink -f "$0")")")
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
 MSYS=winsymlinks:nativestrict
@@ -29,11 +28,18 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: ~/.git-templates 链接成功"
     sudo rm -rf $SP/.git/hooks && ln -s $SP/git/hooks $SP/.git/hooks
     echo "info: 全局配置仓库 hooks 链接成功"
+    sudo rm -f  /usr/local/bin/conf && sudo ln -s $HOME/global-conf/conf/conf /usr/local/bin/conf
+    echo "info: conf 命令安装完成"
+    sudo rm -f  /usr/local/bin/install && sudo ln -s $HOME/global-conf/conf/install /usr/local/bin/install
+    echo "info: install 命令安装完成"
+    sudo rm -f  /usr/local/bin/uninstall && sudo ln -s $HOME/global-conf/conf/uninstall /usr/local/bin/uninstall
+    echo "info: uninstall 命令安装完成"
+
 
     echo "info: neovim 正在从 nvim/nvim-linux64.tar.gz 安装中......"
     sudo tar -xz -f $SP/nvim/nvim-linux64.tar.gz -C /tmp/
     echo "info: 解压成功"
-    sudo cp -rvf /tmp/nvim-linux64/* /usr/local/
+    sudo cp -rf /tmp/nvim-linux64/* /usr/local/
     echo "info: 安装成功"
     sudo rm -rf /tmp/nvim-linux64
     echo "info: 删除安装包"
@@ -43,6 +49,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo ln -s $SP/nvim/init.lua ~/.config/nvim/init.lua
     sudo ln -s $SP/nvim/lua ~/.config/nvim/lua
     echo "info: neovim 配置链接成功"
+
 fi
 # 自动创建ssh公匙
 if [[ -f ~/.ssh/id_rsa.pub ]]; then
