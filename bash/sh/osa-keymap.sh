@@ -7,10 +7,14 @@ git config --global user.name "longyi"
 git config --global user.email "longyi.c@qq.com"
 git config --global core.editor "nvim"
 
-alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
-alias git-pull='git pull origin develop'
+git-pull(){
+    git pull origin develop 
+}
 
-function git-push(){  
+git-log(){ 
+    git log --pretty=oneline --all --graph --abbrev-commit 
+}
+git-push(){  
     git add .  
     read -p "请输入commit注释：" message
     echo $message
