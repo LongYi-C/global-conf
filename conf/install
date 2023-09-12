@@ -5,11 +5,13 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
 MSYS=winsymlinks:nativestrict
     # 如果时win下载scoop，下载nvim
     # scoop install nvim
+    scoop install neovim 
     rm -rf ~/AppData/Local/nvim/ && mkdir -p ~/AppData/Local/nvim/
     rm -rf ~/.config/nvim/ && ln -s ~/AppData/Local/nvim ~/.config/nvim
-    ln -s $gconf/nvim/lua/ ~/AppData/Local/nvim/lua:
+    ln -s $gconf/nvim/lua/ ~/AppData/Local/nvim/lua
     ln -s $gconf/nvim/init.lua ~/AppData/Local/nvim/init.lua
-
+    
+    echo $gconf
     rm -f ~/.bashrc && ln -s $gconf/bash/.bashrc ~/.bashrc
     rm -f ~/.wslconfig && ln -s $gconf/win/.wslconfig ~/.wslconfig
     rm -f ~/.ideavimrc && ln -s $gconf/win/.ideavimrc ~/.ideavimrc
