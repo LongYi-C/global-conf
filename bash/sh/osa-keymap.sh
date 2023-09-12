@@ -9,6 +9,7 @@ git config --global core.editor "nvim"
 
 alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
 alias git-pull='git pull origin develop'
+
 function git-push(){  
     git add .  
     read -p "请输入commit注释：" message
@@ -16,5 +17,6 @@ function git-push(){
     git commit -m "$message"  
     git push origin main:develop  
 }
+
 lalias docker-start "$undifine"
 

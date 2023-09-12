@@ -40,3 +40,14 @@ function lalias() {
         echo -e "alias $1=\"$2\"" >> $bashrc_local  # 注意这里的双引号
     fi
 }
+function path() {
+  local os=$(get_os)
+  local input_path=$1
+  
+  if [[ "$os" == "wsl" ]]; then
+    echo "/mnt$input_path"
+  else
+    echo "$input_path"
+  fi
+}
+
