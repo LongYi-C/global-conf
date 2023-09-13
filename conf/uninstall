@@ -19,6 +19,13 @@ MSYS=winsymlinks:nativestrict
     rm -f ~/.ideavimrc 
     rm -f ~/.bashrc 
     rm -rf ~/.git-templates 
+    rm -f /usr/bin/conf
+    rm -f /usr/bin/install
+    rm -f /usr/bin/uninstall
+    
+    # 卸载nvim
+    # 卸载scoop
+    # 卸载Git
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "info: Linux 卸载中......"
     sudo rm -f ~/.bashrc 
