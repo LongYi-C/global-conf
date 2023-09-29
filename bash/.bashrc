@@ -10,3 +10,6 @@ lexport mysql_volume $(path "/d/longyi/all_resources/mysql")
 lexport code_repository $(path "/d/code")
 
 source $bashrc_local                  # 引入local_bash
+
+export RUST_BACKTRACE=1 cargo run
+alias so="source ~/.bashrc"
